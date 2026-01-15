@@ -285,6 +285,26 @@
             <button class="reset-btn" data-field="nt_server">R</button>
           </div>
           <button id="apply_nt">Apply</button>
+          <h3>IP Config</h3>
+          <label>IP Suffix</label>
+          <div class="input-group">
+            <input
+              type="text"
+              id="ip_suffix"
+              placeholder="last octet of IP (10-254)"
+            />
+            <button class="reset-btn" data-field="ip_suffix">R</button>
+          </div>
+          <label>Human Name</label>
+          <div class="input-group">
+            <input
+              type="text"
+              id="mdns_name"
+              placeholder="like photonvision (ignore the .local)"
+            />
+            <button class="reset-btn" data-field="mdns_name">R</button>
+          </div>
+          <button id="apply_network">Apply</button>
         </div>
 
         <div class="panel">
@@ -332,6 +352,8 @@
         team: document.getElementById("team"),
         driver_mode: document.getElementById("driver_mode"),
         nt_server: document.getElementById("nt_server"),
+        ip_suffix: document.getElementById("ip_suffix"),
+        mdns_name: document.getElementById("mdns_name"),
         board_type: document.getElementById("board_type"),
         tag_family: document.getElementById("tag_family"),
         board_w: document.getElementById("board_w"),
@@ -383,6 +405,8 @@
         els.team.value = cfg.global_data?.team_number ?? 0;
         els.driver_mode.checked = cfg.global_data?.driver_mode ?? false;
         els.nt_server.value = cfg.global_data?.nt_server ?? "";
+        els.mdns_name.value = cfg.global_data?.mdns_name ?? "";
+        els.ip_suffix.value = cfg.global_data?.ip_suffix ?? "";
 
         els.board_type.value = cfg.calib_config?.board_type ?? "Charuco";
         els.tag_family.value = cfg.calib_config?.tag_family ?? "DICT_4X4_1000";
@@ -496,6 +520,18 @@
           JSON.stringify({
             type: "nt_server",
             address: els.nt_server.value.trim(),
+          })
+        );
+      };
+
+      document.getElementById("apply_network").onclick = () => {
+        ws.send(
+          JSON.stringify({
+            type: "global",
+            global:{
+              ip_suffix: parseInt(els.ip_suffix.value.trim()),
+              mdns_name: els.mdns_name.value.trim(),
+            }
           })
         );
       };

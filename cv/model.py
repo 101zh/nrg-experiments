@@ -57,6 +57,8 @@ class GlobalSettings(BaseModel):
     led_brightness: int = Field(default=0, ge=0, le=1)
     driver_mode: bool = Field(default=False)
     camera_name: str = Field(default="change_me")
+    ip_suffix: int = Field(default=11, gt=10, le=254)
+    mdns_name: str = Field(default="default-camera")
 
 
 class CalibrationCaptures(BaseModel):

@@ -27,6 +27,7 @@ logging.basicConfig(level=logging.INFO)
 log = logging.getLogger("photonvision")
 
 CONFIG_PATH = script_path / Path("photonvision_config.json")
+IP_PATH = script_path / Path("ip_suffix.txt")
 _save_lock = threading.Lock()
 _save_timer: Optional[threading.Timer] = None
 
@@ -53,6 +54,12 @@ def _do_save():
     with tmp.open("w") as f:
         json.dump(app_config.model_dump(exclude_none=True), f, indent=2)
     tmp.replace(CONFIG_PATH)
+    tmp_ip = IP_PATH.with_suffix(".tmp")
+    with tmp_ip.open("w") as f:
+        f.write(
+            f"{app_config.global_data.ip_suffix}\n{app_config.global_data.mdns_name}"
+        )
+    tmp_ip.replace(IP_PATH)
     log.info("Config saved")
     # except Exception as e:
     #     async_log.error(f"Save failed: {e}")
@@ -180,7 +187,7 @@ async def mjpeg_handler(request: web.Request):
 
 
 def make_config():
-    print(app_config.model_dump())
+    async_log.info(app_config.model_dump())
     return app_config.model_dump() | {"type": "config"}
 
 
