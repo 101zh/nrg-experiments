@@ -17,8 +17,8 @@ Type the IP of the camera and visit index.html on port 8080 (EX: `10.9.48.11:808
 
 Current WebGUI addresses of cameras:
 
-- Front right camera: [10.9.48.42:8080/index.html](http://10.9.48.42:8080/index.html)
-- Front left camera: [10.9.48.41:8080/index.html](http://10.9.48.41:8080/index.html)
+- Front right camera: [10.9.48.22:8081/index.html](http://10.9.48.22:8081/index.html)
+- Front left camera: [10.9.48.22:8080/index.html](http://10.9.48.22:8080/index.html)
 
 ## How to set up newly imaged Python Vision
 
